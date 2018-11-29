@@ -17,14 +17,14 @@ int P2=0;
 int P3=0;
 int Display=0;
 int select=0;
-int leds[7]={13,12,11,10,A3,A4,A5};
+int leds[7]={13,12,11,3,A3,A4,A5};
 
 //
 
 int readButtons();
 void printSelect();
 void binaryData();
-void Leds();
+void Hamming();
 void showLeds();
 
 //
@@ -35,7 +35,7 @@ void setup()
   pinMode(13, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(11, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(3, OUTPUT);
   pinMode(A3, OUTPUT);
   pinMode(A4, OUTPUT);
   pinMode(A5, OUTPUT);
@@ -83,7 +83,7 @@ void loop()
          break;
        }
        // muestro y enciendo los leds.
-       Leds();
+       Hamming(); 
        showLeds();
        break;
    }
@@ -93,7 +93,9 @@ void loop()
 void printSelect()
 {
   lcd.setCursor(0, 0);
-  lcd.print("Presione Select.");
+  lcd.print("PRESIONE SELECT");
+  lcd.setCursor(0, 1);
+  lcd.print("PARA INCIAR..");
   D1=-1; // -1 para que sean todos asteriscos.
   D2=-1;
   D3=-1;
@@ -107,7 +109,7 @@ void printSelect()
 void showDate()
 {
   lcd.setCursor(0,1);
-  lcd.print("          ");
+  lcd.print("              ");
   lcd.setCursor(0,0);
   if(D1==-1)
   {
@@ -178,7 +180,7 @@ void binaryData()
             {
               case 0:
                 D1++;
-                if (D1==2)
+                if (D1==2) // para que se mantenga en el rango 
                   D1=0;
                 break;
               case 1:
@@ -247,7 +249,7 @@ void binaryData()
 }
 
 //
-void Leds()
+void Hamming()
 {
   if ((D1==0&&D2==0&&D4==1)
     ||(D1==0&&D2==1&&D4==0)
@@ -256,17 +258,17 @@ void Leds()
   {
     P1= 1;
   }
-  if ((D1==0&&D4==0&&D4==1) 
-    ||(D1==0&&D4==1&&D4==0) 
-    ||(D1==1&&D4==1&&D4==1) 
-    ||(D1==1&&D4==0&&D4==0))
+  if ((D1==0&&D3==0&&D4==1) 
+    ||(D1==0&&D3==1&&D4==0) 
+    ||(D1==1&&D3==1&&D4==1) 
+    ||(D1==1&&D3==0&&D4==0))
   {
     P2=1;
   }
-  if ((D2==0&&D4==0&&D4==1)
-    ||(D2==0&&D4==1&&D4==0) 
-    ||(D2==1&&D4==1&&D4==1) 
-    ||(D2==1&&D4==0&&D4==0))
+  if ((D2==0&&D3==0&&D4==1)
+    ||(D2==0&&D3==1&&D4==0) 
+    ||(D2==1&&D3==1&&D4==1) 
+    ||(D2==1&&D3==0&&D4==0))
   {
     P3=1;
   }
